@@ -1,0 +1,94 @@
+ {% load staticfiles %}   
+    	body
+    	{
+    		padding-top:50px;
+    	}
+    	
+    	.clr
+    	{
+    		clear:both;
+    	}
+    	
+    	#contentContainer
+    	{
+    		background-image:url("../img/marsh.jpg");
+            height:600px;
+    		width:100%;
+    		background-size:cover;
+    	}
+    	
+    	.center
+    	{
+    		text-align:center;
+    		margin:0 auto;
+    	}
+    	
+    	#fetchButton
+    	{
+    		margin-top:10px;
+    	}
+    	
+    	#formContainer
+    	{
+    		margin-top:75px;
+    	}
+
+    	
+    	#signUpInModal
+    	{
+    		margin-top:50px;
+    	}
+    	
+    	#infoModal
+    	{
+    		margin-top:60px;
+    	}
+    	
+    	#signInButton
+    	{
+    		background-color:#EEEEEE;
+    	}
+    	
+    	#signUpHeader
+    	{
+    		padding:0;
+    	}
+    	
+    	.buts
+    	{
+    		padding:10px;
+    	}
+    	
+    	#mfSignUp
+    	{
+    		display:none;
+    	}
+    	
+    	#signUpForm
+    	{
+    		display:none;
+    	}
+    	
+    	.warns
+    	{
+    		padding-bottom:7px;
+    		color:red;
+    	}
+    	
+    	
+    	#welcome
+    	{
+    		text-align:center;
+    	}
+    	
+    	#userDets button
+    	{
+    		border:none;
+    		background-color:#F8F8F8;
+    	}
+    	
+    	#userDets button:hover
+    	{
+    		border:none;
+    		background-color:#EEEEEE;
+    	}

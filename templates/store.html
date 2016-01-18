@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+{% block fetchform %}
+	<div class="row" id="formContainer">
+		<div class="col-md-6 col-md-offset-3">
+			<form class="form-horizontal center" method='POST' action = {{ action_dest }}>
+				{{ form|crispy }} {% csrf_token %}
+				<!-- div class="form-group">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">https://</span>
+						<input type="text" class="form-control" id="url" />
+					</div>
+					<button type="button" class="btn btn-success btn-lg center" id="fetchButton" data-toggle="modal" data-target="#infoModal">Fetch</button>	
+				</div> -->
+				<input type = "submit" class="btn btn-success btn-lg" id="storeButton" value ={{ button_text }} />
+			</form>			
+		</div>
+	</div>
+{% endblock %}
+
+{% block dynamicScript %}
+    
+{% endblock %}

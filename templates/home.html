@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block navbar %}
+
+{% endblock %}
+
+
+{% block LoginModal %}
+<div class="modal fade" id="signUpInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header" id="signUpHeader">
+				<!--button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button-->
+				<div class="row">
+					<div class="col-md-6 modalButton">
+						<h4 class="modal-title center buts" id="signInButton">Sign In</h4>
+					</div>
+					<div class="col-md-6 modalButton">
+						<h4 class="modal-title center buts" id="signUpButton">Sign Up</h4>
+					</div>
+				</div>
+			  </div>
+			  <div class="modal-body">
+				
+				<form id = "signInForm">
+				  <div class="form-group">
+					<label for="recipient-name" class="control-label">User ID</label>
+					<input type="text" class="form-control" id="userid" />
+				  </div>
+				  <div class="warns" id="userSinAlert">
+				  </div>
+				  <div class="form-group">
+					<label for="recipient-name" class="control-label">Password</label>
+					<input type="password" class="form-control" id="pass" />
+				  </div>
+				  <div class="warns" id="passSinAlert">
+				  </div>
+				</form>
+				
+				<form id = "signUpForm">
+				  <div class="form-group">
+					<label for="uname" class="control-label">Name</label>
+					<input type="text" class="form-control" id="uname" />
+				  </div>
+				  <div class="form-group">
+					<label for="desuid" class="control-label">Desired ID</label>
+					<input type="text" class="form-control" id="desuid" />
+				  </div>
+				  <div class="warns" id="userDupAlert">
+				  </div>
+				  <div class="form-group">
+					<label for="despass" class="control-label">Password</label>
+					<input type="password" class="form-control" id="despass" />
+				  </div>
+				</form>
+				
+			  </div>
+			  <div class="modal-footer" id="mfSignIn">
+				<button type="button" class="btn btn-success" id="sinbutton">Sign In</button>
+			  </div>
+			  <div class="modal-footer" id="mfSignUp">
+				<button type="button" class="btn btn-success" id="supbutton">Sign Up</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+{% endblock %}
+
+
+{% block dynamicScript %}
+	<!-- {% if pg_1 %}
+  	  <script src="{% static 'js/internal1.js' %}"></script>
+  	{% else %}
+  	   <script src="{% static 'js/internal2.js' %}"></script>
+  	{% endif %} -->
+<script>
+    	var sinmsg = "";
+    	
+    	var userDB = {
+    		"ady" : "pass1",
+    		"kshitij" : "pass2"
+    	};
+    	
+    	function session(username)
+    	{
+    		$('#welcome').html(username);
+    		$('#userDets').show();
+    	}
+    	
+    	function resetModalForms()
+    	{
+    		$('#userid,#pass,#uname,#desuid,#despass').each(function(){
+    			$(this).val('');
+    		});
+    		$('.warns').hide();
+    	}
+    	
+    	function initialize()
+    	{	
+    		$('#signUpInModal').modal({
+   				 backdrop: 'static',
+    			 keyboard: false
+			});
+			
+			resetModalForms();
+			
+			$('#signUpInModal').modal('show');
+			$('.warns').hide();
+			$('#userDets').hide();
+    	}
+    
+    	jQuery(function(){
+    		initialize();
+		});
+		
+		
+    	
+    	$('#contentContainer').css("height",$(window).height() - 49);
+    	
+    	$('#fetchButton').click(function(){
+    		$.get("scripts/hworld.py", function(data){
+ 				 alert(data);
+			});
+    	});
+    	
+    	$('#signInButton').click(function(){
+    		resetModalForms();
+    		$(this).css("background-color","#EEEEEE");
+    		$('#signInForm').css("display","block");
+    		$('#mfSignIn').css("display","block");
+    		
+    		$('#signUpForm').css("display","none");
+    		$('#signUpButton').css("background-color","transparent");
+    		$('#mfSignUp').css("display","none");
+    		
+    	});
+    	
+    	$('#signUpButton').click(function(){
+    		resetModalForms();
+    		$(this).css("background-color","#EEEEEE");
+    		$('#signUpForm').css("display","block");
+    		$('#mfSignUp').css("display","block");
+    		
+    		$('#signInForm').css("display","none");
+    		$('#signInButton').css("background-color","transparent");
+    		$('#mfSignIn').css("display","none");
+    		
+    	});
+    	
+    	$('#sinbutton').click(function(){
+    		$('.warns').hide();
+    		user_id = $('#userid').val();
+    		pass = $('#pass').val();
+    		
+    		if (user_id in userDB)
+    		{
+    			if (userDB[user_id] == pass)
+    			{
+    				$('#signUpInModal').modal('hide');
+    				session(user_id);
+    			}
+    			else
+    			{
+    				$('#passSinAlert').show();
+    				$('#passSinAlert').html("Wrong password");
+    			}
+    		}
+    		else
+    		{
+    			$('#userSinAlert').show();
+    			$('#userSinAlert').html("User ID does not exist");
+    		}
+    	});
+    	
+    	$('#supbutton').click(function(){
+    		$('.warns').hide();
+    		user_id = $('#desuid').val();
+    		pass = $('#despass').val();
+    		
+    		if (user_id in userDB)
+    		{
+    				$('#userDupAlert').show();
+    				$('#userDupAlert').html("User ID already exists. Sign In or choose different ID");
+    		}
+    		else
+    		{
+    			userDB[user_id] = pass;
+    			$('#signUpInModal').modal('hide');
+    			session(user_id);
+    		}
+    	});
+    	
+    	$('#logOutButton').click(function(){
+    		initialize();
+    	});
+</script>
+{% endblock %}
